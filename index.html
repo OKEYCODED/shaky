@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shake Counter</title>
+  <title>Shake Counter Game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <h1>Shake the Phone!</h1>
     <p class="info">Shake your phone to increase the counter. You have 15 seconds!</p>
+    
     <div class="counter" id="counter">0</div>
     <div class="timer" id="timer">15</div>
+    
     <button id="startBtn">Start</button>
+    
     <div id="message" class="message"></div>
+    <div id="hooray" class="hooray"></div>
 
-    <!-- Sound effect -->
-    <audio id="shakeSound" src="692826__hollandm__maracas-shake.mp3" preload="auto"></audio>
+    <!-- Sound effects -->
+    <audio id="shakeSound" src="shake.mp3" preload="auto"></audio>
+    <audio id="hooraySound" src="hooray.mp3" preload="auto"></audio>
   </div>
 
-  <!-- Confetti library -->
+  <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
