@@ -9,7 +9,9 @@ const counterEl = document.getElementById("counter");
 const timerEl = document.getElementById("timer");
 const startBtn = document.getElementById("startBtn");
 const shakeSound = document.getElementById("shakeSound");
+const hooraySound = document.getElementById("hooraySound");
 const messageEl = document.getElementById("message");
+const hoorayEl = document.getElementById("hooray");
 
 function startGame() {
   counter = 0;
@@ -18,6 +20,8 @@ function startGame() {
   counterEl.textContent = counter;
   timerEl.textContent = timer;
   messageEl.textContent = "";
+  hoorayEl.textContent = "";
+  hoorayEl.style.display = "none";
   startBtn.disabled = true;
 
   countdownInterval = setInterval(() => {
@@ -36,9 +40,19 @@ function startGame() {
 function showMessage() {
   if (counter >= 10) {
     messageEl.textContent = `🎉 Great job! You got ${counter} shakes!`;
+    hoorayEl.textContent = "🎊 Hooray! 🎊";
+    hoorayEl.style.display = "block";
+
+    // Play hooray sound
+    hooraySound.currentTime = 0;
+    hooraySound.play();
+
+    // Launch confetti
     launchConfetti();
   } else {
     messageEl.textContent = `👍 You got ${counter} shakes. Try again!`;
+    hoorayEl.textContent = "";
+    hoorayEl.style.display = "none";
   }
 }
 
@@ -91,7 +105,7 @@ if (window.DeviceMotionEvent) {
         counterEl.textContent = counter;
         lastShakeTime = now;
 
-        // Play sound
+        // Play shake sound
         shakeSound.currentTime = 0;
         shakeSound.play();
       }
