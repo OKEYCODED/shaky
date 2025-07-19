@@ -27,6 +27,7 @@ body {
   cursor: pointer;
   border-color: #f4f4f4;
   background-color: rgb(255, 168, 36);
+  border-radius: 10px;
 }
 
 .message {
