@@ -72,10 +72,7 @@ function launchConfetti() {
 
   const interval = setInterval(function () {
     const timeLeft = animationEnd - Date.now();
-
-    if (timeLeft <= 0) {
-      return clearInterval(interval);
-    }
+    if (timeLeft <= 0) return clearInterval(interval);
 
     const particleCount = 50 * (timeLeft / duration);
     confetti({
@@ -89,9 +86,7 @@ function launchConfetti() {
   }, 250);
 }
 
-startBtn.addEventListener("click", startGame);
-
-if (window.DeviceMotionEvent) {
+function enableShakeListener() {
   window.addEventListener("devicemotion", event => {
     if (!shaking || timer <= 0) return;
 
@@ -111,6 +106,31 @@ if (window.DeviceMotionEvent) {
       }
     }
   });
-} else {
-  alert("DeviceMotion not supported on this device.");
 }
+
+function requestMotionPermission() {
+  if (
+    typeof DeviceMotionEvent !== "undefined" &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
+    DeviceMotionEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === "granted") {
+          enableShakeListener();
+        } else {
+          alert("Motion access denied.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error requesting motion access.");
+      });
+  } else {
+    enableShakeListener();
+  }
+}
+
+startBtn.addEventListener("click", () => {
+  requestMotionPermission();
+  startGame();
+});
