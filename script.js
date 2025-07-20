@@ -130,6 +130,35 @@ function requestMotionPermission() {
   }
 }
 
+// Leaderboard Functions
+function updateLeaderboard(newScore) {
+  let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+  scores.push({ score: newScore, date: new Date().toLocaleDateString() });
+  scores.sort((a, b) => b.score - a.score);
+  scores = scores.slice(0, 5);
+
+  localStorage.setItem("leaderboard", JSON.stringify(scores));
+  renderLeaderboard(scores);
+
+}
+
+function renderLeaderboard(scores) {
+  const list = document.getElementById("leaderboard");
+  list.innerHTML = "";
+
+  scores.forEach(entry => {
+    const li = document.createElement("li");
+    li.textContent = `${entry.score} shakes (${entry.date})`;
+    list.appendChild(li);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedScores = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  renderLeaderboard(savedScores);
+});
+
 startBtn.addEventListener("click", () => {
   requestMotionPermission();
   startGame();
